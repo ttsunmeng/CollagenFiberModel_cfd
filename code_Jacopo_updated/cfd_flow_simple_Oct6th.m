@@ -166,7 +166,7 @@ for kk = 2:1:2
             dlmwrite(['./',p.filename,'/',p.filename,'_v_phi.csv'],v_phi','delimiter',',','-append');
             
             dlmwrite(['./',p.filename,'/',p.filename,'_T_fiberN.csv'], F.T_fiberN,'delimiter',',','-append');
-           % dlmwrite(['./',p.filename,'/',p.filename,'_R_fiberN.csv'], F.R_fiberN,'delimiter',',','-append');
+            dlmwrite(['./',p.filename,'/',p.filename,'_R_fiberN.csv'], F.R_fiberN,'delimiter',',','-append');
 
             
             dlmwrite(['./',p.filename,'/',p.filename,'_Tx.csv'], F.traction(:,1)', 'delimiter', ',','-append');
