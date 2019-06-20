@@ -24,6 +24,7 @@ for jj = 1:4
      clearvars p x cross_pairs;
      p = cfd_initiation_flow_May17th_02mg(filename,k,kk);
      
+     % This is the middle CSCG session
      p.bottom_scale_z = -CSCG_size/2; 
      p.domain_scale_z = CSCG_size;
      p.general_scale = 40;
@@ -38,12 +39,12 @@ for jj = 1:4
      [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,kk);
      if round(p.CollagenDensity*100)/100 ~= 1
          fprintf('regenerate fibernetwork\n');
-         p.n = floor(p.n/p.CollagenDensity*p.rho);
+         p.n = floor(p.n/p.CollagenDensity);
          [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,kk);
      end
      
      x_overall = x;
-     
+     % This is the + parallel alignment session
      p.bottom_scale_z = CSCG_size; 
      p.domain_scale_z = p.extension_scale;
      
@@ -61,6 +62,33 @@ for jj = 1:4
          [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,1);
      end
      
+     f = fieldnames(x);
+     for i = 1:length(f)
+        x_overall.(f{i}) = [x_overall.(f{i});x.(f{i})];
+     end
+     
+     % This is the + perpendicular alignment session
+     p.bottom_scale_z = -CSCG_size-p.extension_scale; 
+     p.domain_scale_z = p.extension_scale;
+     
+     p.domain_scale_y = p.general_scale;
+     p.domain_scale_x = p.general_scale;
+     p.bottom_scale_x = -p.general_scale/2; 
+     p.bottom_scale_y = -p.general_scale/2; 
+     
+     p.V = p.domain_scale_x*p.domain_scale_y*p.domain_scale_z;
+     
+     [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,3);
+     if round(p.CollagenDensity*100)/100 ~= 2
+         fprintf('regenerate fibernetwork\n');
+         p.n = floor(p.n/p.CollagenDensity*p.rho);
+         [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,3);
+     end
+     
+     f = fieldnames(x);
+     for i = 1:length(f)
+        x_overall.(f{i}) = [x_overall.(f{i});x.(f{i})];
+     end
      
      
      x_cell = cell_initiation_flow_May17th(p,kk);
