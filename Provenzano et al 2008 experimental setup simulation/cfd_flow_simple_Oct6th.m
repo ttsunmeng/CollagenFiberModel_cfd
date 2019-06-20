@@ -48,11 +48,7 @@ for jj = 1:4
      p.bottom_scale_z = CSCG_size; 
      p.domain_scale_z = p.extension_scale;
      
-     p.domain_scale_y = p.general_scale;
-     p.domain_scale_x = p.general_scale;
-     p.bottom_scale_x = -p.general_scale/2; 
-     p.bottom_scale_y = -p.general_scale/2; 
-     
+    
      p.V = p.domain_scale_x*p.domain_scale_y*p.domain_scale_z;
      
      [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,1);
@@ -69,15 +65,7 @@ for jj = 1:4
      
      % This is the + perpendicular alignment session
      p.bottom_scale_z = -CSCG_size-p.extension_scale; 
-     p.domain_scale_z = p.extension_scale;
-     
-     p.domain_scale_y = p.general_scale;
-     p.domain_scale_x = p.general_scale;
-     p.bottom_scale_x = -p.general_scale/2; 
-     p.bottom_scale_y = -p.general_scale/2; 
-     
-     p.V = p.domain_scale_x*p.domain_scale_y*p.domain_scale_z;
-     
+          
      [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,3);
      if round(p.CollagenDensity*100)/100 ~= 2
          fprintf('regenerate fibernetwork\n');
@@ -89,6 +77,10 @@ for jj = 1:4
      for i = 1:length(f)
         x_overall.(f{i}) = [x_overall.(f{i});x.(f{i})];
      end
+     
+     % set the cell initiation boundary
+     p.bottom_scale_z = -CSCG_size/2; 
+     p.domain_scale_z = CSCG_size;
      
      
      x_cell = cell_initiation_flow_May17th(p,kk);
