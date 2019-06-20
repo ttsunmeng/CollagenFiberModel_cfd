@@ -27,11 +27,11 @@ for jj = 1:4
      p.bottom_scale_z = -CSCG_size/2; 
      p.domain_scale_z = CSCG_size;
      p.general_scale = 40;
+     p.extension_scale = 250;
      p.domain_scale_y = p.general_scale;
      p.domain_scale_x = p.general_scale;
      p.bottom_scale_x = -p.general_scale/2; 
      p.bottom_scale_y = -p.general_scale/2; 
-     
      
      p.V = p.domain_scale_x*p.domain_scale_y*p.domain_scale_z;
 
@@ -41,13 +41,18 @@ for jj = 1:4
          p.n = floor(p.n/p.CollagenDensity*p.rho);
          [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,kk);
      end
+     
      x_overall = x;
-     p.bottom_scale_x = 20; % the coordinate of the fiber network cube starts, such as (200,200,200) to (220,220,220)
-     p.bottom_scale_y = 20; % the coordinate of the fiber network cube starts, such as (200,200,200) to (220,220,220)
-     p.bottom_scale_z = CSCG_size/2; % the coordinate of the fiber network cube starts, such as (200,200,200) to (220,220,220)
-     p.domain_scale_z = 250;
-     p.domain_scale_y = 40;
-     p.domain_scale_x = 40;
+     
+     p.bottom_scale_z = CSCG_size; 
+     p.domain_scale_z = p.extension_scale;
+     
+     p.domain_scale_y = p.general_scale;
+     p.domain_scale_x = p.general_scale;
+     p.bottom_scale_x = -p.general_scale/2; 
+     p.bottom_scale_y = -p.general_scale/2; 
+     
+     p.V = p.domain_scale_x*p.domain_scale_y*p.domain_scale_z;
      
      [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,1);
      if round(p.CollagenDensity*100)/100 ~= 2
