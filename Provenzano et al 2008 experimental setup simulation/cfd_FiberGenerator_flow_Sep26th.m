@@ -107,8 +107,8 @@ function [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,kk)
 %     display('the number of crosslinks and the ratio per fiber')
 %     display([num_crx num_crx/p.n]);
     cross_pairs = [];
-    fprintf(['collagen density: ',num2str(sum(fiber_length)*p.A/(p.V+eps)*p.massdensity*10^12),'\n']);
-    fprintf(['collagen fiber number: ',num2str(p.n),'\n']);
+%     fprintf(['collagen density: ',num2str(sum(fiber_length)*p.A/(p.V+eps)*p.massdensity*10^12),'\n']);
+%     fprintf(['collagen fiber number: ',num2str(p.n),'\n']);
     % pause();
     p.CollagenDensity = sum(fiber_length)*p.A/(p.V+eps)*p.massdensity*10^12;
     %% Output files

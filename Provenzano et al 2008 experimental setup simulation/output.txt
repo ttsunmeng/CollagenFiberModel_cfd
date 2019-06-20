@@ -1,0 +1,72 @@
+
+
+CSCG size: 15um
+flowspeed: 0
+trial: 1
+the parallel fiber domain:2, the perpendicular fiber domain:3, the ratio:1
+
+
+CSCG size: 15um
+flowspeed: 0
+trial: 2
+the parallel fiber domain:2, the perpendicular fiber domain:2, the ratio:1
+
+
+CSCG size: 15um
+flowspeed: 0
+trial: 3
+the parallel fiber domain:4, the perpendicular fiber domain:3, the ratio:1
+
+
+CSCG size: 30um
+flowspeed: 0
+trial: 1
+the parallel fiber domain:1, the perpendicular fiber domain:1, the ratio:1
+
+
+CSCG size: 30um
+flowspeed: 0
+trial: 2
+the parallel fiber domain:1, the perpendicular fiber domain:1, the ratio:1
+
+
+CSCG size: 30um
+flowspeed: 0
+trial: 3
+the parallel fiber domain:2, the perpendicular fiber domain:1, the ratio:2
+
+
+CSCG size: 45um
+flowspeed: 0
+trial: 1
+the parallel fiber domain:1, the perpendicular fiber domain:0, the ratio:Inf
+
+
+CSCG size: 45um
+flowspeed: 0
+trial: 2
+the parallel fiber domain:2, the perpendicular fiber domain:0, the ratio:Inf
+
+
+CSCG size: 45um
+flowspeed: 0
+trial: 3
+the parallel fiber domain:0, the perpendicular fiber domain:0, the ratio:NaN
+
+
+CSCG size: 60um
+flowspeed: 0
+trial: 1
+the parallel fiber domain:0, the perpendicular fiber domain:0, the ratio:NaN
+
+
+CSCG size: 60um
+flowspeed: 0
+trial: 2
+the parallel fiber domain:0, the perpendicular fiber domain:0, the ratio:NaN
+
+
+CSCG size: 60um
+flowspeed: 0
+trial: 3
+the parallel fiber domain:1, the perpendicular fiber domain:0, the ratio:Inf
