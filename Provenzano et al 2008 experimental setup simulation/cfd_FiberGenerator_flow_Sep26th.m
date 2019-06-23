@@ -30,10 +30,10 @@ function [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,kk)
         while l == 1 || z(k,2) > p.domain_scale_z + p.bottom_scale_z || x_tmp(k,2) > p.domain_scale_x + p.bottom_scale_x || y(k,2) > p.domain_scale_y + p.bottom_scale_y...
                 || z(k,1) < p.bottom_scale_z || x_tmp(k,1) < p.bottom_scale_x || y(k,1) < p.bottom_scale_y
             
-                fiber_length(k) = gamrnd(p.fiber_length_a,p.fiber_length_b,1,1) + p.fiber_length_base;
+%                 fiber_length(k) = gamrnd(p.fiber_length_a,p.fiber_length_b,1,1) + p.fiber_length_base;
 
                 
-%                 fiber_length(k) = p.fiber_length_mean + p.fiber_length_std*randn;
+                fiber_length(k) = p.fiber_length_mean + p.fiber_length_std*randn;
 
 
             if kk == 1

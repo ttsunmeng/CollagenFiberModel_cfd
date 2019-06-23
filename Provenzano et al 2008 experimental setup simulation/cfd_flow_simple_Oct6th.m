@@ -8,27 +8,35 @@ l = 1;
 kk = 2;
 k = 0;
 fileID = fopen('output.txt','w');
+dlmwrite("output.csv", [], 'delimiter', ',');
 
 for jj = 1:4
+    CSCG_size = 60;
+    general_scale = 60;
+    c_resistance = 177*3e-4;
     if jj == 1
-        CSCG_size = 15;
+        c_traction = 3e-5;
     elseif jj == 2
-        CSCG_size = 30;
+        c_traction = 6e-5;
+
     elseif jj == 3
-        CSCG_size = 45;
+        c_traction = 9e-5;
     elseif jj == 4
-        CSCG_size = 60;
+        c_traction = 12e-5;
     end
- for j = 1:3
+    ratio_pp = zeros(10,1);
+ for j = 1:10
      close all;
-     filename = ['cdf_test_00um_CSCGsize_',num2str(CSCG_size),'_',num2str(j)];
+     filename = ['cdf_test_00um_ctraction',num2str(jj),'_',num2str(j)];
      clearvars p x cross_pairs;
      p = cfd_initiation_flow_May17th_02mg(filename,k,kk);
-     
+     p.cresistance = c_resistance;
+     p.ctraction = c_traction;
+
      % This is the middle CSCG session
      p.bottom_scale_z = -CSCG_size/2; 
      p.domain_scale_z = CSCG_size;
-     p.general_scale = 40;
+     p.general_scale = general_scale;
      p.extension_scale = 250;
      p.domain_scale_y = p.general_scale;
      p.domain_scale_x = p.general_scale;
@@ -45,6 +53,8 @@ for jj = 1:4
      end
      
      x_overall = x;
+     n_overall = p.n;
+     fiberlength_overall = p.fiber_length;
      % This is the + parallel alignment session
      p.bottom_scale_z = CSCG_size; 
      p.domain_scale_z = p.extension_scale;
@@ -63,7 +73,9 @@ for jj = 1:4
      for i = 1:length(f)
         x_overall.(f{i}) = [x_overall.(f{i});x.(f{i})];
      end
-     
+     n_overall = n_overall + p.n;
+     fiberlength_overall = [fiberlength_overall;p.fiber_length];
+
      % This is the + perpendicular alignment session
      p.bottom_scale_z = -CSCG_size-p.extension_scale; 
           
@@ -78,7 +90,12 @@ for jj = 1:4
      for i = 1:length(f)
         x_overall.(f{i}) = [x_overall.(f{i});x.(f{i})];
      end
-     
+     n_overall = n_overall + p.n;
+     fiberlength_overall = [fiberlength_overall;p.fiber_length];
+
+     x = x_overall;
+     p.n = n_overall;
+     p.fiber_length = fiberlength_overall;
      % set the cell initiation boundary
      p.bottom_scale_z = -CSCG_size/2; 
      p.domain_scale_z = CSCG_size;
@@ -91,7 +108,7 @@ for jj = 1:4
      fprintf(fileID,['\n']);
      fprintf(fileID,['\n']);
 
-     fprintf(fileID,['CSCG size: ',num2str(CSCG_size),'um\n']);
+     fprintf(fileID,['ctraction: ',num2str(c_traction),'um\n']);
      fprintf(fileID,['flowspeed: ',num2str(k),'\n']);
      fprintf(fileID,['trial: ',num2str(j),'\n']);
      
@@ -216,10 +233,12 @@ for jj = 1:4
         dlmwrite(['./',p.filename,'/',p.filename,'_movement.csv'], movement', 'delimiter', ',','-append');
 
     end
- fprintf(fileID,['the parallel fiber domain:',num2str(sum(x_cell.location_z > CSCG_size/2)),...
+    ratio_pp(j) = sum(x_cell.location_z > CSCG_size/2)/sum(x_cell.location_z < -CSCG_size/2);
+    
+    fprintf(fileID,['the parallel fiber domain:',num2str(sum(x_cell.location_z > CSCG_size/2)),...
      ', the perpendicular fiber domain:',num2str(sum(x_cell.location_z < -CSCG_size/2)),...
-     ', the ratio:',num2str(round(sum(x_cell.location_z > CSCG_size/2)/sum(x_cell.location_z < -CSCG_size/2))),'\n']);
-
+     ', the ratio:',num2str(ratio_pp(j)),'\n']);
+    
 
 %     % last position output section       
 %     overall_last_location_z_mean(l) = mean(x_cell.location_z);
@@ -313,5 +332,7 @@ for jj = 1:4
 %     print('-dpng','-r400',['./figure/',p.filename,'_z_displacement.png']);
 
  end 
+ dlmwrite("output.csv", ratio_pp', 'delimiter', ',','-append');
+
 end
         

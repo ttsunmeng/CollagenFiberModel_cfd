@@ -61,10 +61,11 @@ function p = cfd_initiation_flow_May17th_02mg(filename,k,kk)
     
     
     p.mag_protursion = 50e-12; % 50-500pN: half goes to protursion (50pN) and half to traction?
-    p.E = 1e-4; % 100kPa = 10^(-7)N/um^2. 100MPa = 1e-4N/um^2
-    p.ctraction = 3e-8; % So that the traction force on each fiber is 3pN = p.ctraction*p.E.1-100pN per bond
+    p.E = 1e-7; % 100kPa = 10^(-7)N/um^2.
+    p.ctraction = 3e-5; % So that the traction force on each fiber is 3pN = p.ctraction*p.E.1-100pN per bond
     
-    p.cresistance = 177*3e-4/6;%15/3600*p.dt*p.n/p.V; % So the resistance force we assume is 10 times smaller here.
+    
+    p.cresistance = 177*3e-4;%15/3600*p.dt*p.n/p.V; % So the resistance force we assume is 10 times smaller here.
     % Effective area of the cell is pi*R*R=177um^2, U = 15um/h =
     % 15/3600*p.dt
     
@@ -73,11 +74,10 @@ function p = cfd_initiation_flow_May17th_02mg(filename,k,kk)
     %p.n = floor(2500/3.3/8000*p.rho*p.V);
     
     %the number of collagen fibers/fibrils
-    p.fiber_length_a = 0.971750840346117;                                      % from 4mg/ml FIRE length data estimated by gamma distribution.
-    p.fiber_length_b = 1.748381900546554;                                      % from 4mg/ml FIRE length data estimated by gamma distribution.
-    p.fiber_length_base = 1.9859;
-    p.fiber_length_mean = p.fiber_length_a*p.fiber_length_b + p.fiber_length_base;
-    p.persistent_length = 1.0;
+    p.fiber_length_mean = 14; % length parameters micrometers
+    p.fiber_length_std = 7;
+    p.fiber_length_lowerlimit = 5;
+    p.fiber_length_upperlimit = 23;
     
     
     AI = 0.9;
