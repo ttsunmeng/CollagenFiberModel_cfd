@@ -1,0 +1,5 @@
+
+
+ctraction: 3e-05um
+flowspeed: 0
+trial: 1

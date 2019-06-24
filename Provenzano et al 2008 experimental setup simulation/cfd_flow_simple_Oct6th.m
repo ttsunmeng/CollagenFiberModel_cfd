@@ -10,7 +10,7 @@ k = 0;
 fileID = fopen('output.txt','w');
 dlmwrite("output.csv", [], 'delimiter', ',');
 
-for jj = 1:4
+for jj = 1:1
     CSCG_size = 60;
     general_scale = 60;
     c_resistance = 177*3e-4;
@@ -25,7 +25,7 @@ for jj = 1:4
         c_traction = 12e-5;
     end
     ratio_pp = zeros(10,1);
- for j = 1:10
+ for j = 1:1
      close all;
      filename = ['cdf_test_00um_ctraction',num2str(jj),'_',num2str(j)];
      clearvars p x cross_pairs;
