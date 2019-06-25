@@ -3,3 +3,4 @@
 ctraction: 3e-05um
 flowspeed: 0
 trial: 1
+the parallel fiber domain:0, the perpendicular fiber domain:0, the ratio:NaN

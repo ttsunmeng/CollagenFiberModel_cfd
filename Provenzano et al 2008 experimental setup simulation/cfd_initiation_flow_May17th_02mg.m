@@ -85,7 +85,7 @@ function p = cfd_initiation_flow_May17th_02mg(filename,k,kk)
     p.theta_std = interp1(checkTable(:,2),checkTable(:,1),AI);
     % These data are from Sivakumar et al, 2010, The influence of discoidin 
     % domain receptor 2 on the persistence length of collagen type I fibers
-    p.seg_diameter = 0.42; %ranges a lot, but can choose the average of the scale to be 100nm from Sivakumar et al, 2010, The influence of discoidin domain receptor 2 on the persistence length of collagen type I fibers
+    p.seg_diameter = 0.1; %ranges a lot, but can choose the average of the scale to be 100nm from Sivakumar et al, 2010, The influence of discoidin domain receptor 2 on the persistence length of collagen type I fibers
     % Stein et al 2008 (DOI: 10.1111/j.1365-2818.2008.02141.x) also used 30nm. 
     p.A = pi*p.seg_diameter*p.seg_diameter/4;
     p.Irot = 1/64*pi*p.seg_diameter*p.seg_diameter*p.seg_diameter*p.seg_diameter; % Second moment of inertia for circular cross section for all cartesian axes

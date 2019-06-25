@@ -5,9 +5,9 @@ x_cell.N = 100; %cell number
 x_cell.R = ones(x_cell.N,1)*7.5; % cell radius in m.
 
 
-x_cell.location_x = p.bottom_scale_x + p.domain_scale_x*rand(x_cell.N,1);
-x_cell.location_y = p.bottom_scale_y + p.domain_scale_y*rand(x_cell.N,1);
-x_cell.location_z = p.bottom_scale_z + p.domain_scale_z*rand(x_cell.N,1);
+x_cell.location_x = p.bottom_scale_x + 10 + (p.domain_scale_x - 20)*rand(x_cell.N,1);
+x_cell.location_y = p.bottom_scale_y + 10 + (p.domain_scale_y - 20)*rand(x_cell.N,1);
+x_cell.location_z = p.bottom_scale_z + 10 + (p.domain_scale_z - 20)*rand(x_cell.N,1);
 
 x_cell.location_x_source = x_cell.location_x;
 x_cell.location_y_source = x_cell.location_y;

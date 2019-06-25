@@ -51,7 +51,10 @@ for jj = 1:1
          p.n = floor(p.n/p.CollagenDensity);
          [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,kk);
      end
-     
+     fprintf(['collagen density: ',num2str(p.CollagenDensity),'\n']);
+     fprintf(['collagen fiber number: ',num2str(p.n),'\n']);
+    % pause();
+    
      x_overall = x;
      n_overall = p.n;
      fiberlength_overall = p.fiber_length;
@@ -68,7 +71,8 @@ for jj = 1:1
          p.n = floor(p.n/p.CollagenDensity*p.rho);
          [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,1);
      end
-     
+     fprintf(['collagen density: ',num2str(p.CollagenDensity),'\n']);
+     fprintf(['collagen fiber number: ',num2str(p.n),'\n']);
      f = fieldnames(x);
      for i = 1:length(f)
         x_overall.(f{i}) = [x_overall.(f{i});x.(f{i})];
@@ -85,7 +89,8 @@ for jj = 1:1
          p.n = floor(p.n/p.CollagenDensity*p.rho);
          [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,3);
      end
-     
+     fprintf(['collagen density: ',num2str(p.CollagenDensity),'\n']);
+     fprintf(['collagen fiber number: ',num2str(p.n),'\n']);
      f = fieldnames(x);
      for i = 1:length(f)
         x_overall.(f{i}) = [x_overall.(f{i});x.(f{i})];

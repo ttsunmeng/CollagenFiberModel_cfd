@@ -1,14 +1,14 @@
 function F = TractionForceCalculator(p,x,x_cell)
 
-if abs(x_cell.location_x) > p.general_scale/2
-    x_cell.location_x = p.general_scale/2+sign(x_cell.location_x)*mod(abs(x_cell.location_x),p.general_scale/2);
+if abs(x_cell.location_x) > p.general_scale/2 - 10
+    x_cell.location_x = -sign(x_cell.location_x)*(p.general_scale/2 - 10)+sign(x_cell.location_x)*mod(abs(x_cell.location_x),p.general_scale/2 - 10);
     disp('out of scale in x');
 end
-if abs(x_cell.location_y) > p.general_scale/2
-    x_cell.location_y = p.general_scale/2+sign(x_cell.location_y)*mod(abs(x_cell.location_y),p.general_scale/2);
+if abs(x_cell.location_y) > p.general_scale/2 - 10
+    x_cell.location_y = -sign(x_cell.location_y)*(p.general_scale/2 - 10)+sign(x_cell.location_y)*mod(abs(x_cell.location_y),p.general_scale/2 - 10);
     disp('out of scale in y');
 end    
-if abs(x_cell.location_z) > p.general_scale/2 + p.extension_scale
+if abs(x_cell.location_z) > p.general_scale/2 + p.extension_scale - 10
     error('out of scale in z');
 end      
 
