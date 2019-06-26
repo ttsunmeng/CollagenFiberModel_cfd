@@ -159,8 +159,8 @@ for jj = 1:1
     disp(['total frames: ',num2str(p.tnind)]);
     for i = 1:p.tnind
                %x_cell.v = zeros();
-        if mod(i,3600/120) == 0
-            disp(['the hour passed: ',num2str(i/3600*120)]);
+        if mod(i,3600) == 0
+            disp(['the hour passed: ',num2str(p.tnind
         end
         for m = 1:100
             for n = 1:3

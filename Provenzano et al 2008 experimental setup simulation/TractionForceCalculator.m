@@ -1,19 +1,19 @@
 function F = TractionForceCalculator(p,x,x_cell)
 
-if abs(x_cell.location_x) > p.general_scale/2 - 10
-    x_cell.location_x = -sign(x_cell.location_x)*(p.general_scale/2 - 10)+sign(x_cell.location_x)*mod(abs(x_cell.location_x),p.general_scale/2 - 10);
-    disp('out of scale in x');
-end
-if abs(x_cell.location_y) > p.general_scale/2 - 10
-    x_cell.location_y = -sign(x_cell.location_y)*(p.general_scale/2 - 10)+sign(x_cell.location_y)*mod(abs(x_cell.location_y),p.general_scale/2 - 10);
-    disp('out of scale in y');
-end    
-if abs(x_cell.location_z) > p.general_scale/2 + p.extension_scale - 10
-    error('out of scale in z');
-end      
 
 for i = 1:x_cell.N
-    
+    if abs(x_cell.location_x(i)) > p.general_scale/2 - 10
+        x_cell.location_x(i) = -sign(x_cell.location_x(i))*(p.general_scale/2 - 10)+sign(x_cell.location_x(i)).*mod(abs(x_cell.location_x(i)),p.general_scale/2 - 10);
+%         disp('out of scale in x');
+    end
+    if abs(x_cell.location_y(i)) > p.general_scale/2 - 10
+        x_cell.location_y(i) = -sign(x_cell.location_y(i))*(p.general_scale/2 - 10)+sign(x_cell.location_y(i)).*mod(abs(x_cell.location_y(i)),p.general_scale/2 - 10);
+%         disp('out of scale in y');
+    end    
+    if abs(x_cell.location_z(i)) > p.general_scale/2 + p.extension_scale - 10
+        error('out of scale in z');
+    end      
+
     index_start = find(((x.x_seg_start - x_cell.location_x(i)).^2 + (x.y_seg_start - x_cell.location_y(i)).^2 + (x.z_seg_start - x_cell.location_z(i)).^2 < x_cell.R(i)^2)==1);
     index_end = find(((x.x_seg_end - x_cell.location_x(i)).^2 + (x.y_seg_end - x_cell.location_y(i)).^2 + (x.z_seg_end - x_cell.location_z(i)).^2 < x_cell.R(i)^2)==1);
 
