@@ -7,44 +7,45 @@ rmdir('figure','s');
 mkdir('figure');
 
 kk = 2;
-
+k = 1;%[1,7]
 l = 1;
 
- for k = 1:1 %[0,1,7]
-     
-         
-	
-    for j = 1:1
-
-
-        for CCL21_block = 0:0
+if k == 0
+    dlmwrite('cfd_00um_streamline_control.csv', [],'delimiter',',');
+    dlmwrite('cfd_00um_directional_control.csv', [],'delimiter',',');
+    dlmwrite('cfd_00um_streamline_CCL21block.csv', [],'delimiter',',');
+    dlmwrite('cfd_00um_directional_CCL21block.csv', [],'delimiter',',');
+elseif k == 1
+    dlmwrite('cfd_03um_streamline_control.csv', [],'delimiter',',');
+    dlmwrite('cfd_03um_directional_control.csv', [],'delimiter',',');
+    dlmwrite('cfd_03um_streamline_CCL21block.csv', [],'delimiter',',');
+    dlmwrite('cfd_03um_directional_CCL21block.csv', [],'delimiter',',');
+elseif k == 7
+    dlmwrite('cfd_3um_streamline_control.csv', [],'delimiter',',');
+    dlmwrite('cfd_3um_directional_control.csv', [],'delimiter',',');
+    dlmwrite('cfd_3um_streamline_CCL21block.csv', [],'delimiter',',');
+    dlmwrite('cfd_3um_directional_CCL21block.csv', [],'delimiter',',');
+end
+            
+ for jj = 1:5
+    if jj == 1
+        c_traction_v1 = 0.5;
+    elseif jj == 2
+        c_traction_v1 = 0.75;
+    elseif jj == 3    
+        c_traction_v1 = 1;
+    elseif jj == 4 
+        c_traction_v1 = 1.25;
+	elseif jj == 5
+        c_traction_v1 = 1.5;
+    end
+    
+    for j = 1:3
+        
+        for CCL21_block = 0:1
+            
             filename = 'cfd_flow_experiment_';
-            if j == 1
-             if CCL21_block == 0
-                if k == 0
-                    dlmwrite('cfd_00um_streamline_control.csv', [],'delimiter',',');
-                    dlmwrite('cfd_00um_directional_control.csv', [],'delimiter',',');
-                elseif k == 1
-                    dlmwrite('cfd_03um_streamline_control.csv', [],'delimiter',',');
-                    dlmwrite('cfd_03um_directional_control.csv', [],'delimiter',',');
-                elseif k == 2
-                    dlmwrite('cfd_3um_streamline_control.csv', [],'delimiter',',');
-                    dlmwrite('cfd_3um_directional_control.csv', [],'delimiter',',');
-                end
-            elseif CCL21_block == 1
-                if k == 0
-                    dlmwrite('cfd_00um_streamline_CCL21block.csv', [],'delimiter',',');
-                    dlmwrite('cfd_00um_directional_CCL21block.csv', [],'delimiter',',');
-                elseif k == 1
-                    dlmwrite('cfd_03um_streamline_CCL21block.csv', [],'delimiter',',');
-                    dlmwrite('cfd_03um_directional_CCL21block.csv', [],'delimiter',',');
-                elseif k == 2
-                    dlmwrite('cfd_3um_streamline_CCL21block.csv', [],'delimiter',',');
-                    dlmwrite('cfd_3um_directional_CCL21block.csv', [],'delimiter',',');
-                end                   
-
-             end
-            end
+            
              close all;
              
              if k == 0
@@ -64,21 +65,36 @@ l = 1;
              elseif k == 7
                  filename = [filename,'_30um_',num2str(j)];
              end
+             
+             if jj == 1
+                filename = [filename,'_05_'];
+            elseif jj == 2
+                filename = [filename,'_075_'];
+            elseif jj == 3    
+                filename = [filename,'_10_'];
+            elseif jj == 4 
+                filename = [filename,'_125_'];
+            elseif jj == 5
+                filename = [filename,'_15_'];
+            end
              if CCL21_block == 0
                 filename =[filename,'_control'];
              elseif CCL21_block == 1
                 filename = [filename,'_CCL21block'];
              end
+             
              clearvars p x cross_pairs;
              p = cfd_initiation_flow_May17th_02mg(filename,k,kk);
              p.CCL21_block = CCL21_block;
              if CCL21_block == 1
              	p.temp_pool = (0:180)';
              end
+             p.ctraction_v1 = c_traction_v1;
              fprintf(['flowspeed: ',num2str(p.flow_v_z),'\n']);
+             fprintf(['increased traction coefficient percentage in the upstream: ',num2str(100*c_traction_v1),' \n']);
+
              fprintf(['trial: ',num2str(j),'\n']);
              fprintf(['have CCL21 black? ',num2str(CCL21_block),'\n']);
-             
             
              [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,kk);
              if round(p.CollagenDensity*100)/100 ~= p.rho
@@ -175,38 +191,6 @@ l = 1;
                 cell_theta = acos(x_cell.location_z./sqrt((x_cell.location_x).^2 + (x_cell.location_y).^2 + (x_cell.location_z).^2))*180/pi;
                 cell_phi = atan2(x_cell.location_y,x_cell.location_x)*180/pi;
                 
-% %                 if mod(p.tnind,8) == 0
-% %                     temp_theta = acos((x_cell.location_z - x_cell.location_z_previous)./sqrt((x_cell.location_x - x_cell.location_x_previous).^2 + (x_cell.location_y - x_cell.location_y_previous).^2 + (x_cell.location_z - x_cell.location_z_previous).^2))*180/pi;
-% %                     streamline = (sum(temp_theta <= 45 | temp_theta >= 135) - sum(temp_theta > 45 & temp_theta < 135))/size(temp_theta,1);
-% %                     directional = (sum(temp_theta <= 45) - sum(temp_theta >= 135))/(sum(temp_theta <= 45) + sum(temp_theta >= 135));
-% %                     x_cell.location_x_previous = x_cell.location_x;
-% %                     x_cell.location_y_previous = x_cell.location_y;
-% %                     x_cell.location_z_previous = x_cell.location_z;
-% %                     if CCL21_block == 0
-% %                         if k == 0
-% %                             dlmwrite('cfd_00um_streamline_control.csv', streamline,'delimiter',',','-append');
-% %                             dlmwrite('cfd_00um_directional_control.csv', directional,'delimiter',',','-append');
-% %                         elseif k == 1
-% %                             dlmwrite('cfd_03um_streamline_control.csv', streamline,'delimiter',',','-append');
-% %                             dlmwrite('cfd_03um_directional_control.csv', directional,'delimiter',',','-append');
-% %                         elseif k == 2
-% %                             dlmwrite('cfd_3um_streamline_control.csv', streamline,'delimiter',',','-append');
-% %                             dlmwrite('cfd_3um_directional_control.csv', directional,'delimiter',',','-append');
-% %                         end
-% %                     elseif CCL21_block == 1
-% %                         if k == 0
-% %                             dlmwrite('cfd_00um_streamline_CCL21block.csv', streamline,'delimiter',',','-append');
-% %                             dlmwrite('cfd_00um_directional_CCL21block.csv', directional,'delimiter',',','-append');
-% %                         elseif k == 1
-% %                             dlmwrite('cfd_03um_streamline_CCL21block.csv', streamline,'delimiter',',','-append');
-% %                             dlmwrite('cfd_03um_directional_CCL21block.csv', directional,'delimiter',',','-append');
-% %                         elseif k == 2
-% %                             dlmwrite('cfd_3um_streamline_CCL21block.csv', streamline,'delimiter',',','-append');
-% %                             dlmwrite('cfd_3um_directional_CCL21block.csv', directional,'delimiter',',','-append');
-% %                         end                   
-% %                     
-% %                     end
-% %                 end
 
                 if i == p.tnind
                     temp_theta = acos((x_cell.location_z)./sqrt((x_cell.location_x).^2 + (x_cell.location_y).^2 + (x_cell.location_z).^2))*180/pi;
@@ -220,7 +204,7 @@ l = 1;
                         elseif k == 1
                             dlmwrite('cfd_03um_streamline_control.csv', streamline,'delimiter',',','-append');
                             dlmwrite('cfd_03um_directional_control.csv', directional,'delimiter',',','-append');
-                        elseif k == 2
+                        elseif k == 7
                             dlmwrite('cfd_3um_streamline_control.csv', streamline,'delimiter',',','-append');
                             dlmwrite('cfd_3um_directional_control.csv', directional,'delimiter',',','-append');
                         end
@@ -231,7 +215,7 @@ l = 1;
                         elseif k == 1
                             dlmwrite('cfd_03um_streamline_CCL21block.csv', streamline,'delimiter',',','-append');
                             dlmwrite('cfd_03um_directional_CCL21block.csv', directional,'delimiter',',','-append');
-                        elseif k == 2
+                        elseif k == 7
                             dlmwrite('cfd_3um_streamline_CCL21block.csv', streamline,'delimiter',',','-append');
                             dlmwrite('cfd_3um_directional_CCL21block.csv', directional,'delimiter',',','-append');
                         end                   
@@ -285,40 +269,40 @@ l = 1;
             [N,~] = histc(cell_theta,0:10:180);
             
 
-            % MSD calculation !!
-            cell_positions_x(p.tnind+1,:) = x_cell.location_x';
-            cell_positions_y(p.tnind+1,:) = x_cell.location_y';
-            cell_positions_z(p.tnind+1,:) = x_cell.location_z';
-            MSD_complex = zeros(p.tnind,1);
-            for i = 1:p.tnind
-                MSD_complex(i) = sum(sum((cell_positions_x(i+1:end,:) - cell_positions_x(1:end-i,:)).^2 + (cell_positions_y(i+1:end,:) - cell_positions_y(1:end-i,:)).^2 +(cell_positions_z(i+1:end,:) - cell_positions_z(1:end-i,:)).^2))/(size(cell_positions_x(i+1:end,:),1)*size(cell_positions_x(i+1:end,:),2))/30/30;
-            end
-            dlmwrite(['./',p.filename,'/',p.filename,'_MSD_complex.csv'], MSD_complex, 'delimiter', ',');
-
-            if j == 1
-                figure('PaperPosition',[.25 .25 16 12]);
-                loglog((1:p.tnind)*2,MSD_complex,'k-','linewidth',2);
-                set(gca,'fontsize',12)
-                title([num2str(round(p.CollagenDensity)),'mg/ml collagen density ',num2str(p.flow_v_z),'um/s interstitial flow'], 'Fontsize', 12);
-                ylabel('MSD (um^2/hr^2)', 'Fontsize', 12);
-                xlabel('time(min)', 'Fontsize', 12);
-                set(gca,'linewidth',2)
-                print('-dpng','-r400',['./figure/',p.filename,'_MSD_complex.png']);
-            end
-
-            logx = log10((1:p.tnind)*2)';
-            logMSD = log10(MSD_complex);
-            myfittype = fittype('a*x+b','independent','x');
-            for i = 2:p.tnind
-                [flogMSD,gof] = fit(logx(max([i - 20,1]):i),logMSD(max([i - 20,1]):i), myfittype);
-                flogMSDrollingslope(i - 1) = flogMSD.a;
-                flogMSDrollingintercept(i - 1) = flogMSD.b;
-                if i <= p.tnind - 1 && i >= 10
-                    [flogMSD,gof] = fit(logx(end - i:end),logMSD(end - i:end), myfittype);
-                    flogMSDslope(p.tnind - i) = flogMSD.a;
-                    flogMSDintercept(p.tnind - i) = flogMSD.b;
-                end
-            end
+% %             % MSD calculation !!
+% %             cell_positions_x(p.tnind+1,:) = x_cell.location_x';
+% %             cell_positions_y(p.tnind+1,:) = x_cell.location_y';
+% %             cell_positions_z(p.tnind+1,:) = x_cell.location_z';
+% %             MSD_complex = zeros(p.tnind,1);
+% %             for i = 1:p.tnind
+% %                 MSD_complex(i) = sum(sum((cell_positions_x(i+1:end,:) - cell_positions_x(1:end-i,:)).^2 + (cell_positions_y(i+1:end,:) - cell_positions_y(1:end-i,:)).^2 +(cell_positions_z(i+1:end,:) - cell_positions_z(1:end-i,:)).^2))/(size(cell_positions_x(i+1:end,:),1)*size(cell_positions_x(i+1:end,:),2))/30/30;
+% %             end
+% %             dlmwrite(['./',p.filename,'/',p.filename,'_MSD_complex.csv'], MSD_complex, 'delimiter', ',');
+% % 
+% %             if j == 1
+% %                 figure('PaperPosition',[.25 .25 16 12]);
+% %                 loglog((1:p.tnind)*2,MSD_complex,'k-','linewidth',2);
+% %                 set(gca,'fontsize',12)
+% %                 title([num2str(round(p.CollagenDensity)),'mg/ml collagen density ',num2str(p.flow_v_z),'um/s interstitial flow'], 'Fontsize', 12);
+% %                 ylabel('MSD (um^2/hr^2)', 'Fontsize', 12);
+% %                 xlabel('time(min)', 'Fontsize', 12);
+% %                 set(gca,'linewidth',2)
+% %                 print('-dpng','-r400',['./figure/',p.filename,'_MSD_complex.png']);
+% %             end
+% % 
+% %             logx = log10((1:p.tnind)*2)';
+% %             logMSD = log10(MSD_complex);
+% %             myfittype = fittype('a*x+b','independent','x');
+% %             for i = 2:p.tnind
+% %                 [flogMSD,gof] = fit(logx(max([i - 20,1]):i),logMSD(max([i - 20,1]):i), myfittype);
+% %                 flogMSDrollingslope(i - 1) = flogMSD.a;
+% %                 flogMSDrollingintercept(i - 1) = flogMSD.b;
+% %                 if i <= p.tnind - 1 && i >= 10
+% %                     [flogMSD,gof] = fit(logx(end - i:end),logMSD(end - i:end), myfittype);
+% %                     flogMSDslope(p.tnind - i) = flogMSD.a;
+% %                     flogMSDintercept(p.tnind - i) = flogMSD.b;
+% %                 end
+% %             end
 
     %         overall_MSD_slope(l) = flogMSDrollingslope(100);
     %         overall_MSD_slope2(l) = flogMSDslope(100);
@@ -367,8 +351,12 @@ directional_control = csvread("cfd_03um_directional_control.csv");
 streamline_control = csvread("cfd_03um_streamline_control.csv");
 directional_CCL21block = csvread("cfd_03um_directional_CCL21block.csv");
 streamline_CCL21block = csvread("cfd_03um_streamline_CCL21block.csv");
-directional_control_mean = mean(directional_control);
-streamline_control_mean = mean(streamline_control);
-directional_CCL21block_mean = mean(directional_CCL21block);
-streamline_CCL21block_mean = mean(streamline_CCL21block);
+loss_03 = (streamline_control - 0.5).^2 + (directional_control - 0.55).^2 + ...
+    (streamline_CCL21block - 0.2).^2 + (directional_CCL21block + 0.4).^2;
+
+% loss_05 = (streamline_control - 0.1).^2 + (directional_control - 0.3).^2 + ...
+%     (streamline_CCL21block - 0.35).^2 + (directional_CCL21block + 0.6).^2;
+
+dlmwrite('output_03.csv', [streamline_control,streamline_CCL21block,directional_control,directional_CCL21block,loss_03], 'delimiter', ',');
+
  

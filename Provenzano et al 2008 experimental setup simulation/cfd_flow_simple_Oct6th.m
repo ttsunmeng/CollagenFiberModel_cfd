@@ -13,9 +13,9 @@ dlmwrite("output.csv", [], 'delimiter', ',');
 for jj = 1:1
     CSCG_size = 60;
     general_scale = 60;
-    c_resistance = 177*3e-4;
+    c_resistance = 1;
     if jj == 1
-        c_traction = 3e-5;
+        c_traction = 3e-6;
     elseif jj == 2
         c_traction = 6e-5;
 
@@ -24,8 +24,11 @@ for jj = 1:1
     elseif jj == 4
         c_traction = 12e-5;
     end
-    ratio_pp = zeros(10,1);
- for j = 1:1
+    repeat_trail = 10;
+    ratio_pp = zeros(repeat_trail,1);
+    cell_num_perpendicular = zeros(repeat_trail,1);
+    cell_num_parallel = zeros(repeat_trail,1);
+ for j = 1:repeat_trail
      close all;
      filename = ['cdf_test_00um_ctraction',num2str(jj),'_',num2str(j)];
      clearvars p x cross_pairs;
@@ -243,6 +246,8 @@ for jj = 1:1
 
     end
     ratio_pp(j) = sum(x_cell.location_z > CSCG_size/2)/sum(x_cell.location_z < -CSCG_size/2);
+    cell_num_perpendicular(j) = sum(x_cell.location_z < -CSCG_size/2);
+    cell_num_parallel(j) = sum(x_cell.location_z > CSCG_size/2);
     
     fprintf(fileID,['the parallel fiber domain:',num2str(sum(x_cell.location_z > CSCG_size/2)),...
      ', the perpendicular fiber domain:',num2str(sum(x_cell.location_z < -CSCG_size/2)),...
@@ -342,6 +347,14 @@ for jj = 1:1
 
  end 
  dlmwrite("output.csv", ratio_pp', 'delimiter', ',','-append');
-
+ figure;
+ x = [cell_num_parallel;cell_num_perpendicular];
+ g1 = repmat({'parallel'},repeat_trail,1);
+ g2 = repmat({'perpendicular'},repeat_trail,1);
+ g = [g1;g2];
+ boxplot(x,g);
+ set(gca,'fontsize',12);
+ set(gca,'linewidth',2);
+ print('-dpng','-r400',[p.filename,'_cell_number.png']);
 end
         
