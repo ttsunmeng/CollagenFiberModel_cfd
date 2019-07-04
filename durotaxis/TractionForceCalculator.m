@@ -16,17 +16,23 @@ for i = 1:x_cell.N
     index_start_new(ismember(index_start,common_index)) = [];
     index_end_new(ismember(index_end,common_index)) = [];
     
-%     F.T_fiberN(i) = size(index_start_new,1) + size(index_end_new,1) + size(common_index,1);
+    F.T_fiberN(i) = size(index_start_new,1) + size(index_end_new,1) + size(common_index,1);
 
 %     F.traction(i,:) = p.ctraction*p.E*[(sum(x.norm_x(index_start_new)) - sum(x.norm_x(index_end_new))) (sum(x.norm_y(index_start_new)) - sum(x.norm_y(index_end_new))) (sum(x.norm_z(index_start_new)) - sum(x.norm_z(index_end_new)))];
     F.traction(i,:) = -p.ctraction*[(sum(p.E(index_start_new).*x.norm_x(index_start_new)) - sum(p.E(index_end_new).*x.norm_x(index_end_new))) (sum(p.E(index_start_new).*x.norm_y(index_start_new)) - sum(p.E(index_end_new).*x.norm_y(index_end_new))) (sum(p.E(index_start_new).*x.norm_z(index_start_new)) - sum(p.E(index_end_new).*x.norm_z(index_end_new)))];
-
-    if isempty(common_index)
-        F.frictionECM(i,1) = 0;
-        F.frictionECM(i,2) = 0;
-        F.frictionECM(i,3) = 0;
-        continue;
-    end
+    list_x_direction = [x.norm_x(index_start_new);-x.norm_x(index_end_new)];
+    list_y_direction = [x.norm_y(index_start_new);-x.norm_y(index_end_new)];
+    list_z_direction = [x.norm_z(index_start_new);-x.norm_z(index_end_new)];
+    E_temp = [p.E(index_start_new);p.E(index_end_new)];
+    if p.flow_v_z ~= 0
+       F.traction(i,:) = F.traction(i,:) + p.ctraction*p.ctraction_add*[sum(E_temp(list_z_direction < 0).*list_x_direction(list_z_direction < 0)) sum(E_temp(list_z_direction < 0).*list_y_direction(list_z_direction < 0)) sum(E_temp(list_z_direction < 0).*list_z_direction(list_z_direction < 0))];
+   end
+%     if isempty(common_index)
+%         F.frictionECM(i,1) = 0;
+%         F.frictionECM(i,2) = 0;
+%         F.frictionECM(i,3) = 0;
+%         continue;
+%     end
     
     all_contact_index = [];
     project_vector = [];  

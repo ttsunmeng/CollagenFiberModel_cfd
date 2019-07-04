@@ -56,7 +56,7 @@ l = 1;
          p = cfd_initiation_flow_May17th_02mg(filename,k,kk);
          [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,kk);
          if round(p.CollagenDensity*100)/100 ~= p.rho
-             fprintf('regenerate fibernetwork\n');
+%              fprintf('regenerate fibernetwork\n');
              p.n = floor(p.n/p.CollagenDensity*p.rho);
              [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,kk);
          end
@@ -64,6 +64,8 @@ l = 1;
          i = 1;
          h = 0;
         %  h = cfd_output_flow_May18th2017(p,x,x_cell,1,h);
+        fprintf(['collagen density: ',num2str(p.CollagenDensity),'\n']);
+         fprintf(['collagen fiber number: ',num2str(p.n),'\n']);
          fprintf(['alignment: ',num2str(kk),'\n']);
          fprintf(['flowspeed: ',num2str(k),'\n']);
          fprintf(['trial: ',num2str(j),'\n']);

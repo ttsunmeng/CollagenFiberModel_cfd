@@ -1,6 +1,60 @@
 
 
-ctraction: 3e-05um
+ctraction: 3e-06um
 flowspeed: 0
 trial: 1
-the parallel fiber domain:0, the perpendicular fiber domain:0, the ratio:NaN
+the parallel fiber domain:12, the perpendicular fiber domain:0, the ratio:Inf
+
+
+ctraction: 3e-06um
+flowspeed: 0
+trial: 2
+the parallel fiber domain:8, the perpendicular fiber domain:0, the ratio:Inf
+
+
+ctraction: 3e-06um
+flowspeed: 0
+trial: 3
+the parallel fiber domain:7, the perpendicular fiber domain:1, the ratio:7
+
+
+ctraction: 3e-06um
+flowspeed: 0
+trial: 4
+the parallel fiber domain:6, the perpendicular fiber domain:0, the ratio:Inf
+
+
+ctraction: 3e-06um
+flowspeed: 0
+trial: 5
+the parallel fiber domain:11, the perpendicular fiber domain:0, the ratio:Inf
+
+
+ctraction: 3e-06um
+flowspeed: 0
+trial: 6
+the parallel fiber domain:9, the perpendicular fiber domain:0, the ratio:Inf
+
+
+ctraction: 3e-06um
+flowspeed: 0
+trial: 7
+the parallel fiber domain:6, the perpendicular fiber domain:0, the ratio:Inf
+
+
+ctraction: 3e-06um
+flowspeed: 0
+trial: 8
+the parallel fiber domain:8, the perpendicular fiber domain:0, the ratio:Inf
+
+
+ctraction: 3e-06um
+flowspeed: 0
+trial: 9
+the parallel fiber domain:5, the perpendicular fiber domain:0, the ratio:Inf
+
+
+ctraction: 3e-06um
+flowspeed: 0
+trial: 10
+the parallel fiber domain:9, the perpendicular fiber domain:0, the ratio:Inf

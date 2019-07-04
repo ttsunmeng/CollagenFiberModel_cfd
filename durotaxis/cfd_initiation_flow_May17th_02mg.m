@@ -34,10 +34,10 @@ function p = cfd_initiation_flow_May17th_02mg(filename,k,kk)
     
     p.mag_protursion = 5e-11; % 50-500pN: half goes to protursion (50pN) and half to traction?
     p.E = 1e-7; % 100kPa = 10^(-7)N/um^2.
-    p.ctraction = 10e-6; % So that the traction force on each fiber is 3pN = p.ctraction*p.E.1-100pN per bond
+    p.ctraction = 3e-6; % So that the traction force on each fiber is 3pN = p.ctraction*p.E.1-100pN per bond
+    p.ctraction_add = 0.623077*p.flow_v_z/(0.115385 + p.flow_v_z); % the percentage of traction upstream increase at 0.3um/s
     
-    
-    p.cresistance = 1.77e2*300; % So the resistance force we assume is 10 times smaller here.Effective area of the cell is pi*R*R=177um^2
+    p.cresistance = 1; % So the resistance force we assume is 10 times smaller here.Effective area of the cell is pi*R*R=177um^2
     
     p.rho = 2; % collagen concentration 2mg/ml;
     %p.n = floor(2500/3.3/8000*p.rho*p.V);

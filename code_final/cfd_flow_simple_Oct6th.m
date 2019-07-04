@@ -41,13 +41,15 @@ for kk = 1:3
          p = cfd_initiation_flow_May17th_02mg(filename,k,kk);
          [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,kk);
          if round(p.CollagenDensity*100)/100 ~= p.rho
-             fprintf('regenerate fibernetwork\n');
+%              fprintf('regenerate fibernetwork\n');
              p.n = floor(p.n/p.CollagenDensity*p.rho);
              [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,kk);
          end
          x_cell = cell_initiation_flow_May17th(p,kk);
          i = 1;
          h = 0;
+         fprintf(['collagen density: ',num2str(p.CollagenDensity),'\n']);
+         fprintf(['collagen fiber number: ',num2str(p.n),'\n']);
          fprintf(['alignment: ',num2str(kk),'\n']);
          fprintf(['flowspeed: ',num2str(k),'\n']);
          fprintf(['trial: ',num2str(j),'\n']);
@@ -90,12 +92,12 @@ for kk = 1:3
                    %x_cell.v = zeros();
             for m = 1:100
                 for n = 1:3
-            if abs(drag(m,n) + F.protrusion(m,n) + F.traction(m,n)) <= abs(F.frictionECM(m,n))
-               x_cell.v (m,n) = 0;
-            else
-            x_cell.v (m,n) = (drag (m,n) + F.protrusion (m,n) + F.traction (m,n) + F.frictionECM(m,n))./(p.viscosity_ECM*6*pi*7.5);
-            end
-            end
+                    if abs(drag(m,n) + F.protrusion(m,n) + F.traction(m,n)) <= abs(F.frictionECM(m,n))
+                       x_cell.v (m,n) = 0;
+                    else
+                        x_cell.v (m,n) = (drag (m,n) + F.protrusion (m,n) + F.traction (m,n) + F.frictionECM(m,n))./(p.viscosity_ECM*6*pi*7.5);
+                    end
+                end
             end
             original_location_x = x_cell.location_x;
             original_location_y = x_cell.location_y;

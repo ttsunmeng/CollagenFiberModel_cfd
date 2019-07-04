@@ -26,12 +26,12 @@ for i = 1:x_cell.N
    if p.flow_v_z ~= 0
        F.traction(i,:) = F.traction(i,:) + p.ctraction*p.E*p.ctraction_add*[sum(list_x_direction(list_z_direction < 0)) sum(list_y_direction(list_z_direction < 0)) sum(list_z_direction(list_z_direction < 0))];
    end
-    if isempty(common_index)
-        F.frictionECM(i,1) = 0;
-        F.frictionECM(i,2) = 0;
-        F.frictionECM(i,3) = 0;
-        continue;
-    end
+%     if isempty(common_index)
+%         F.frictionECM(i,1) = 0;
+%         F.frictionECM(i,2) = 0;
+%         F.frictionECM(i,3) = 0;
+%         continue;
+%     end
     
     all_contact_index = [];
     project_vector = [];  
