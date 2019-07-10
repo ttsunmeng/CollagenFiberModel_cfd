@@ -7,7 +7,7 @@ rmdir('figure','s');
 mkdir('figure');
 
 kk = 2;
-k = 7;%[1,7]
+k = 0;%[1,7]
 l = 1;
 
 % if k == 0
@@ -27,20 +27,20 @@ l = 1;
 %     dlmwrite('cfd_3um_directional_CCL21block.csv', [],'delimiter',',');
 % end
             
- for jj = 3:5
-    if jj == 1
-        c_traction_v1 = 0.52;
-    elseif jj == 2
-        c_traction_v1 = 0.54;
-    elseif jj == 3    
-        c_traction_v1 = 0.56;
-    elseif jj == 4 
-        c_traction_v1 = 0.58;
-	elseif jj == 5
-        c_traction_v1 = 0.6;
-    end
+ for jj = 1:1
+%     if jj == 1
+%         c_traction_v1 = 0.52;
+%     elseif jj == 2
+%         c_traction_v1 = 0.54;
+%     elseif jj == 3    
+%         c_traction_v1 = 0.56;
+%     elseif jj == 4 
+%         c_traction_v1 = 0.58;
+% 	elseif jj == 5
+%         c_traction_v1 = 0.6;
+%     end
     
-    for j = 1:3
+    for j = 1:1
         
         for CCL21_block = 0:1
             
@@ -66,17 +66,17 @@ l = 1;
                  filename = [filename,'_30um_',num2str(j)];
              end
              
-             if jj == 1
-                filename = [filename,'_052_'];
-            elseif jj == 2
-                filename = [filename,'_054_'];
-            elseif jj == 3    
-                filename = [filename,'_056_'];
-            elseif jj == 4 
-                filename = [filename,'_058_'];
-            elseif jj == 5
-                filename = [filename,'_06_'];
-            end
+%              if jj == 1
+%                 filename = [filename,'_052_'];
+%             elseif jj == 2
+%                 filename = [filename,'_054_'];
+%             elseif jj == 3    
+%                 filename = [filename,'_056_'];
+%             elseif jj == 4 
+%                 filename = [filename,'_058_'];
+%             elseif jj == 5
+%                 filename = [filename,'_06_'];
+%             end
              if CCL21_block == 0
                 filename =[filename,'_control'];
              elseif CCL21_block == 1
@@ -89,9 +89,9 @@ l = 1;
              if CCL21_block == 1
              	p.temp_pool = (0:180)';
              end
-             p.ctraction_v1 = c_traction_v1;
+%              p.ctraction_v1 = c_traction_v1;
              fprintf(['flowspeed: ',num2str(p.flow_v_z),'\n']);
-             fprintf(['increased traction coefficient percentage in the upstream: ',num2str(100*c_traction_v1),' \n']);
+%              fprintf(['increased traction coefficient percentage in the upstream: ',num2str(100*c_traction_v1),' \n']);
 
              fprintf(['trial: ',num2str(j),'\n']);
              fprintf(['have CCL21 black? ',num2str(CCL21_block),'\n']);
@@ -249,7 +249,7 @@ l = 1;
                 dlmwrite(['./',p.filename,'/',p.filename,'_v_phi.csv'],v_phi','delimiter',',','-append');
 
                 dlmwrite(['./',p.filename,'/',p.filename,'_T_fiberN.csv'], F.T_fiberN,'delimiter',',','-append');
-               % dlmwrite(['./',p.filename,'/',p.filename,'_R_fiberN.csv'], F.R_fiberN,'delimiter',',','-append');
+                dlmwrite(['./',p.filename,'/',p.filename,'_R_fiberN.csv'], F.R_fiberN,'delimiter',',','-append');
 
 
                 dlmwrite(['./',p.filename,'/',p.filename,'_Tx.csv'], F.traction(:,1)'*1e12, 'delimiter', ',','-append');
@@ -347,16 +347,16 @@ l = 1;
  end
  
  
-directional_control = csvread("cfd_3um_directional_control.csv");
-streamline_control = csvread("cfd_3um_streamline_control.csv");
-directional_CCL21block = csvread("cfd_3um_directional_CCL21block.csv");
-streamline_CCL21block = csvread("cfd_3um_streamline_CCL21block.csv");
-% loss_03 = (streamline_control - 0.5).^2 + (directional_control - 0.55).^2 + ...
-%     (streamline_CCL21block - 0.2).^2 + (directional_CCL21block + 0.4).^2;
-
-loss_30 = (streamline_control - 0.1).^2 + (directional_control - 0.3).^2 + ...
-    (streamline_CCL21block - 0.35).^2 + (directional_CCL21block + 0.6).^2;
-
-dlmwrite('output_30.csv', [streamline_control,streamline_CCL21block,directional_control,directional_CCL21block,loss_30], 'delimiter', ',');
-
- 
+% directional_control = csvread("cfd_3um_directional_control.csv");
+% streamline_control = csvread("cfd_3um_streamline_control.csv");
+% directional_CCL21block = csvread("cfd_3um_directional_CCL21block.csv");
+% streamline_CCL21block = csvread("cfd_3um_streamline_CCL21block.csv");
+% % loss_03 = (streamline_control - 0.5).^2 + (directional_control - 0.55).^2 + ...
+% %     (streamline_CCL21block - 0.2).^2 + (directional_CCL21block + 0.4).^2;
+% 
+% loss_30 = (streamline_control - 0.1).^2 + (directional_control - 0.3).^2 + ...
+%     (streamline_CCL21block - 0.35).^2 + (directional_CCL21block + 0.6).^2;
+% 
+% dlmwrite('output_30.csv', [streamline_control,streamline_CCL21block,directional_control,directional_CCL21block,loss_30], 'delimiter', ',');
+% 
+%  

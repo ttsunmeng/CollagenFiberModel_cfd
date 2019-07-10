@@ -11,11 +11,11 @@ function [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,kk)
     p.rotcenter = zeros(p.n,1);
     k = 1;
     if kk == 1
-        theta = 90 + p.theta_std*randn(p.n,1); %p.theta_std*randn(p.n,1) %180*rand(p.n,1);
+        theta = p.theta_std*randn(p.n,1); %p.theta_std*randn(p.n,1) %180*rand(p.n,1);
     elseif kk == 2
-        theta = 90 + p.theta_std*randn(p.n,1); %p.theta_std*randn(p.n,1) %180*rand(p.n,1);
-    elseif kk == 3
         theta = 180*rand(p.n,1); %p.theta_std*randn(p.n,1) %180*rand(p.n,1);
+    elseif kk == 3
+        theta = 90 + p.theta_std*randn(p.n,1); %p.theta_std*randn(p.n,1) %180*rand(p.n,1);
     elseif kk == 4
         theta = p.theta_std*randn(p.n,1); %p.theta_std*randn(p.n,1) %180*rand(p.n,1);
     end

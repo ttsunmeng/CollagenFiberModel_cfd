@@ -13,13 +13,11 @@ function [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,kk)
     tmpcenter = [p.bottom_scale + p.domain_scale_x/2;p.bottom_scale + p.domain_scale_y/2;p.bottom_scale + p.domain_scale_z/2];
     k = 1;
     if kk == 1
-        theta = 90 + p.theta_std*randn(p.n,1); %p.theta_std*randn(p.n,1) %180*rand(p.n,1);
-    elseif kk == 2
-        theta = 90 + p.theta_std*randn(p.n,1); %p.theta_std*randn(p.n,1) %180*rand(p.n,1);
-    elseif kk == 3
-        theta = 180*rand(p.n,1); %p.theta_std*randn(p.n,1) %180*rand(p.n,1);
-    elseif kk == 4
         theta = p.theta_std*randn(p.n,1); %p.theta_std*randn(p.n,1) %180*rand(p.n,1);
+    elseif kk == 2
+        theta = 180*rand(p.n,1);%p.theta_std*randn(p.n,1) %180*rand(p.n,1);
+    elseif kk == 3
+        theta = 90 + p.theta_std*randn(p.n,1);  %p.theta_std*randn(p.n,1) %180*rand(p.n,1);
     end
     
     theta(theta<0) = -theta(theta<0);
@@ -27,6 +25,7 @@ function [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,kk)
     theta(theta > 720) = theta(theta > 720) - 720;
     theta(theta > 180) = 360 - theta(theta > 180);
     theta(theta==180) = 0;
+    p.theta_output = theta;
     while k <= p.n
         l = 1;
         while l == 1 || z(k,2) > p.domain_scale_z + p.bottom_scale || x_tmp(k,2) > p.domain_scale_x + p.bottom_scale || y(k,2) > p.domain_scale_y + p.bottom_scale...
@@ -38,13 +37,11 @@ function [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,kk)
 
 
             if kk == 1
-                phi(k) = p.theta_std*randn(1);
+                phi(k) = 360*rand(1);
             elseif kk == 2
                 phi(k) = 360*rand(1); % p.theta_std*randn(1);
             elseif kk == 3
-                phi(k) = 360*rand(1); % p.theta_std*randn(1);
-            elseif kk == 4
-                phi(k) = 360*rand(1); % p.theta_std*randn(1);
+                phi(k) = p.theta_std*randn(1); % p.theta_std*randn(1);
             end
 
 
@@ -74,7 +71,7 @@ function [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,kk)
         k = k + 1;
     end
     n = p.n;
-
+    p.phi_output = phi;
     %% The tracking nodes of fibers and their coordinates.
     p.fiber_length = fiber_length;
     x.cor_glo = [x_tmp(:,1) + p.rotcenter.*(x_tmp(:,2) - x_tmp(:,1)) y(:,1) + p.rotcenter.*(y(:,2)-y(:,1)) z(:,1) + p.rotcenter.*(z(:,2)-z(:,1))];

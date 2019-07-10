@@ -13,13 +13,11 @@ function [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,kk)
     tmpcenter = [p.bottom_scale + p.domain_scale_x/2;p.bottom_scale + p.domain_scale_y/2;p.bottom_scale + p.domain_scale_z/2];
     k = 1;
     if kk == 1
-        theta = 90 + p.theta_std*randn(p.n,1); %p.theta_std*randn(p.n,1) %180*rand(p.n,1);
-    elseif kk == 2
-        theta = 90 + p.theta_std*randn(p.n,1); %p.theta_std*randn(p.n,1) %180*rand(p.n,1);
-    elseif kk == 3
-        theta = 180*rand(p.n,1); %p.theta_std*randn(p.n,1) %180*rand(p.n,1);
-    elseif kk == 4
         theta = p.theta_std*randn(p.n,1); %p.theta_std*randn(p.n,1) %180*rand(p.n,1);
+    elseif kk == 2
+        theta = 180*rand(p.n,1);%p.theta_std*randn(p.n,1) %180*rand(p.n,1);
+    elseif kk == 3
+        theta = 90 + p.theta_std*randn(p.n,1);  %p.theta_std*randn(p.n,1) %180*rand(p.n,1);
     end
     
     theta(theta<0) = -theta(theta<0);
@@ -92,7 +90,6 @@ function [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,kk)
     x.y_seg_end = y(:,2);
     
     
-    
 %     x.start = [x.x_seg_start x.y_seg_start x.z_seg_start];
 %     x.end = [x.x_seg_end x.y_seg_end x.z_seg_end];
     
@@ -113,8 +110,7 @@ function [p,x,cross_pairs,h] = cfd_FiberGenerator_flow_Sep26th(p,kk)
 %     display('the number of crosslinks and the ratio per fiber')
 %     display([num_crx num_crx/p.n]);
     cross_pairs = [];
-%     fprintf(['collagen density: ',num2str(sum(fiber_length)*p.A/(p.V+eps)*p.massdensity*10^12),'\n']);
-%     fprintf(['collagen fiber number: ',num2str(p.n),'\n']);
+    
     % pause();
     p.CollagenDensity = sum(fiber_length)*p.A/(p.V+eps)*p.massdensity*10^12;
     %% Output files

@@ -15,7 +15,7 @@ function p = cfd_initiation_flow_May17th_02mg(filename,k,kk)
         flow_list = [0.3,0.5,1,1.5,2,2.5,3];
         p.flow_v = [0 0 flow_list(k)]; % um/s from Polacheck et al 2011 PNAS.
         p.flow_v_z = flow_list(k);
-        chemotaxis_table = [0.586,0.623,0.657,0.677,0.691,0.7,0.706;0.431,0.412,0.39,0.37,0.356,0.355,0.333;0.218,0.183,0.152,0.132,0.12,0.115,0.103;0.166,0.133,0.106,0.091,0.082,0.079,0.071;0.142,0.114,0.092,0.079,0.071,0.068,0.062];
+        chemotaxis_table = [0.403,0.405,0.409,0.413,0.416,0.42,0.424;0.432,0.433,0.435,0.438,0.44,0.443,0.445;0.388,0.388,0.388,0.388,0.388,0.387,0.387;0.397,0.396,0.393,0.39,0.388,0.385,0.382;0.381,0.379,0.375,0.371,0.367,0.363,0.359];
         flow_v_table = [0.3;0.5;1;1.5;2;2.5;3];
         theta_table = [0;45;90;135;180];
         [X,Y] = meshgrid(flow_v_table,theta_table);
@@ -30,7 +30,7 @@ function p = cfd_initiation_flow_May17th_02mg(filename,k,kk)
         flow_list = [0.3,0.5,1,1.5,2,2.5,3];
         p.flow_v = [0 0 flow_list(k)]; % um/s from Polacheck et al 2011 PNAS.
         p.flow_v_z = flow_list(k);
-        chemotaxis_table = [0.53,0.559,0.594,0.615,0.63,0.64,0.654;0.415,0.389,0.357,0.33,0.308,0.291,0.28;0.243,0.208,0.176,0.155,0.14,0.129,0.121;0.205,0.172,0.142,0.124,0.112,0.103,0.097;0.18,0.151,0.125,0.11,0.10,0.092,0.087];
+        chemotaxis_table = [0.403,0.405,0.409,0.413,0.417,0.421,0.424;0.432,0.433,0.435,0.438,0.44,0.443,0.445;0.389,0.388,0.388,0.388,0.388,0.387,0.387;0.397,0.396,0.393,0.39,0.388,0.385,0.382;0.38,0.379,0.375,0.371,0.367,0.363,0.359];
         flow_v_table = [0.3;0.5;1;1.5;2;2.5;3];
         theta_table = [0;45;90;135;180];
         [X,Y] = meshgrid(flow_v_table,theta_table);
@@ -46,7 +46,7 @@ function p = cfd_initiation_flow_May17th_02mg(filename,k,kk)
         flow_list = [0.3,0.5,1,1.5,2,2.5,3];
         p.flow_v = [0 0 flow_list(k)]; % um/s from Polacheck et al 2011 PNAS.
         p.flow_v_z = flow_list(k);
-        chemotaxis_table = [0.51,0.533,0.566,0.588,0.603,0.62,0.627;0.433,0.414,0.391,0.367,0.349,0.332,0.316;0.242,0.204,0.164,0.14,0.124,0.112,0.102;0.211,0.18,0.148,0.13,0.118,0.109,0.102;0.211,0.187,0.162,0.147,0.136,0.127,0.12];
+        chemotaxis_table = [0.404,0.405,0.409,0.413,0.417,0.421,0.425;0.432,0.433,0.435,0.438,0.44,0.443,0.445;0.388,0.388,0.388,0.388,0.388,0.387,0.387;0.397,0.396,0.393,0.39,0.388,0.385,0.382;0.38,0.378,0.374,0.370,0.366,0.362,0.358];
         flow_v_table = [0.3;0.5;1;1.5;2;2.5;3];
         theta_table = [0;45;90;135;180];
         [X,Y] = meshgrid(flow_v_table,theta_table);
@@ -69,7 +69,7 @@ function p = cfd_initiation_flow_May17th_02mg(filename,k,kk)
     p.E = 1e-7; % 100kPa = 10^(-7)N/um^2.
     p.ctraction = 3e-6; % So that the traction force on each fiber is 3pN = p.ctraction*p.E.1-100pN per bond
     p.ctraction_v1 = 0.45; % the percentage of traction upstream increase at 0.3um/s
-    p.ctraction_v2 = 0.6; % the percentage of traction upstream increase at 3um/s
+    p.ctraction_v2 = 1.35; % the percentage of traction upstream increase at 3um/s
     
     p.cresistance = 1; % So the resistance force we assume is 10 times smaller here.Effective area of the cell is pi*R*R=177um^2
     
