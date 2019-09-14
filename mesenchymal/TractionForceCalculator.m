@@ -23,9 +23,9 @@ for i = 1:x_cell.N
     list_x_direction = [x.norm_x(index_start_new);-x.norm_x(index_end_new)];
     list_y_direction = [x.norm_y(index_start_new);-x.norm_y(index_end_new)];
     list_z_direction = [x.norm_z(index_start_new);-x.norm_z(index_end_new)];
-%    if p.flow_v_z ~= 0
-%        F.traction(i,:) = F.traction(i,:) + p.ctraction*p.E*p.ctraction_add*[sum(list_x_direction(list_z_direction < 0)) sum(list_y_direction(list_z_direction < 0)) sum(list_z_direction(list_z_direction < 0))];
-%    end
+   if p.flow_v_z ~= 0
+       F.traction(i,:) = F.traction(i,:) + p.ctraction*p.E*p.ctraction_add*[sum(list_x_direction(list_z_direction < 0)) sum(list_y_direction(list_z_direction < 0)) sum(list_z_direction(list_z_direction < 0))];
+   end
 %     if isempty(common_index)
 %         F.frictionECM(i,1) = 0;
 %         F.frictionECM(i,2) = 0;
